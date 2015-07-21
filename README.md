@@ -2,14 +2,14 @@
 
 # Passport
 
-[![Build](https://travis-ci.org/jaredhanson/passport.svg?branch=master)](https://travis-ci.org/jaredhanson/passport)
-[![Coverage](https://coveralls.io/repos/jaredhanson/passport/badge.svg?branch=master)](https://coveralls.io/r/jaredhanson/passport)
-[![Quality](https://codeclimate.com/github/jaredhanson/passport/badges/gpa.svg)](https://codeclimate.com/github/jaredhanson/passport)
-[![Dependencies](https://david-dm.org/jaredhanson/passport.svg)](https://david-dm.org/jaredhanson/passport)
+[![Build](https://travis-ci.org/jameswomack/passport-restify.svg?branch=master)](https://travis-ci.org/jameswomack/passport-restify)
+[![Coverage](https://coveralls.io/repos/jameswomack/passport-restify/badge.svg?branch=master)](https://coveralls.io/r/jameswomack/passport-restify)
+[![Quality](https://codeclimate.com/github/jameswomack/passport-restify/badges/gpa.svg)](https://codeclimate.com/github/jameswomack/passport-restify)
+[![Dependencies](https://david-dm.org/jameswomack/passport-restify.svg)](https://david-dm.org/jameswomack/passport-restify)
 [![Tips](https://img.shields.io/gratipay/jaredhanson.svg)](https://gratipay.com/jaredhanson/)
 
 
-Passport is [Express](http://expressjs.com/)-compatible authentication
+Passport Restify is [Restify](https://github.com/restify/node-restify)-compatible authentication
 middleware for [Node.js](http://nodejs.org/).
 
 Passport's sole purpose is to authenticate requests, which it does through an
@@ -21,7 +21,7 @@ hooks for controlling what occurs when authentication succeeds or fails.
 
 ## Install
 
-    $ npm install passport
+    $ npm install passport-restify
 
 ## Usage
 
@@ -70,23 +70,6 @@ deserializing.
       });
     });
 
-#### Middleware
-
-To use Passport in an [Express](http://expressjs.com/) or
-[Connect](http://senchalabs.github.com/connect/)-based application, configure it
-with the required `passport.initialize()` middleware.  If your application uses
-persistent login sessions (recommended, but not required), `passport.session()`
-middleware must also be used.
-
-    app.configure(function() {
-      app.use(express.static(__dirname + '/../../public'));
-      app.use(express.cookieParser());
-      app.use(express.bodyParser());
-      app.use(express.session({ secret: 'keyboard cat' }));
-      app.use(passport.initialize());
-      app.use(passport.session());
-      app.use(app.router);
-    });
 
 #### Authenticate Requests
 
@@ -112,18 +95,18 @@ The following table lists commonly used strategies:
 
 |Strategy                                                       | Protocol                 |Developer                                       |
 |---------------------------------------------------------------|--------------------------|------------------------------------------------|
-|[Local](https://github.com/jaredhanson/passport-local)         | HTML form                |[Jared Hanson](https://github.com/jaredhanson)  |
-|[OpenID](https://github.com/jaredhanson/passport-openid)       | OpenID                   |[Jared Hanson](https://github.com/jaredhanson)  |
-|[BrowserID](https://github.com/jaredhanson/passport-browserid) | BrowserID                |[Jared Hanson](https://github.com/jaredhanson)  |
-|[Facebook](https://github.com/jaredhanson/passport-facebook)   | OAuth 2.0                |[Jared Hanson](https://github.com/jaredhanson)  |
-|[Google](https://github.com/jaredhanson/passport-google)       | OpenID                   |[Jared Hanson](https://github.com/jaredhanson)  |
-|[Google](https://github.com/jaredhanson/passport-google-oauth) | OAuth / OAuth 2.0        |[Jared Hanson](https://github.com/jaredhanson)  |
-|[Twitter](https://github.com/jaredhanson/passport-twitter)     | OAuth                    |[Jared Hanson](https://github.com/jaredhanson)  |
+|[Local](https://github.com/jameswomack/passport-restify-local)         | HTML form                |[Jared Hanson](https://github.com/jaredhanson)  |
+|[OpenID](https://github.com/jameswomack/passport-restify-openid)       | OpenID                   |[Jared Hanson](https://github.com/jaredhanson)  |
+|[BrowserID](https://github.com/jameswomack/passport-restify-browserid) | BrowserID                |[Jared Hanson](https://github.com/jaredhanson)  |
+|[Facebook](https://github.com/jameswomack/passport-restify-facebook)   | OAuth 2.0                |[Jared Hanson](https://github.com/jaredhanson)  |
+|[Google](https://github.com/jameswomack/passport-restify-google)       | OpenID                   |[Jared Hanson](https://github.com/jaredhanson)  |
+|[Google](https://github.com/jameswomack/passport-restify-google-oauth) | OAuth / OAuth 2.0        |[Jared Hanson](https://github.com/jaredhanson)  |
+|[Twitter](https://github.com/jameswomack/passport-restify-twitter)     | OAuth                    |[Jared Hanson](https://github.com/jaredhanson)  |
 
 ## Examples
 
-- For a complete, working example, refer to the [login example](https://github.com/jaredhanson/passport-local/tree/master/examples/login)
-included in [passport-local](https://github.com/jaredhanson/passport-local).
+- For a complete, working example, refer to the [login example](https://github.com/jameswomack/passport-restify-local/tree/master/examples/login)
+included in [passport-local](https://github.com/jameswomack/passport-restify-local).
 - **Local Strategy**: Refer to the following tutorials for setting up user authentication via LocalStrategy (`passport-local`)
     - Express v3x - [Tutorial](http://mherman.org/blog/2013/11/11/user-authentication-with-passport-dot-js/) / [working example](https://github.com/mjhea0/passport-local)
     - Express v4x - [Tutorial](http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/) / [working example](https://github.com/mjhea0/passport-local-express4)
@@ -136,8 +119,8 @@ included in [passport-local](https://github.com/jaredhanson/passport-local).
 - [OAuth2orize](https://github.com/jaredhanson/oauth2orize) — OAuth 2.0 authorization server toolkit
 - [connect-ensure-login](https://github.com/jaredhanson/connect-ensure-login)  — middleware to ensure login sessions
 
-The [modules](https://github.com/jaredhanson/passport/wiki/Modules) page on the
-[wiki](https://github.com/jaredhanson/passport/wiki) lists other useful modules
+The [modules](https://github.com/jameswomack/passport-restify/wiki/Modules) page on the
+[wiki](https://github.com/jameswomack/passport-restify/wiki) lists other useful modules
 that build upon or integrate with Passport.
 
 ## Tests

@@ -1,10 +1,9 @@
 {
-  "name": "passport",
-  "version": "0.2.2",
-  "description": "Simple, unobtrusive authentication for Node.js.",
+  "name": "passport-restify",
+  "version": "1.0.0",
+  "description": "Simple, unobtrusive authentication for Restify.",
   "keywords": [
-    "express",
-    "connect",
+    "restify",
     "auth",
     "authn",
     "authentication"
@@ -14,13 +13,13 @@
     "email": "jaredhanson@gmail.com",
     "url": "http://www.jaredhanson.net/"
   },
-  "homepage": "http://passportjs.org/",
+  "homepage": "https://github.com/jameswomack/passport-restify",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/passport.git"
+    "url": "git://github.com/jameswomack/passport-restify.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/passport/issues"
+    "url": "http://github.com/jameswomack/passport-restify/issues"
   },
   "license": "MIT",
   "licenses": [
@@ -42,7 +41,7 @@
     "proxyquire": "1.x.x"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.10.0"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js test/**/*.test.js"

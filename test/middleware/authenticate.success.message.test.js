@@ -6,7 +6,7 @@ var chai = require('chai')
 
 
 describe('middleware/authenticate', function() {
-  
+
   describe('success with message set by route', function() {
     function Strategy() {
     }
@@ -14,10 +14,10 @@ describe('middleware/authenticate', function() {
       var user = { id: '1', username: 'jaredhanson' };
       this.success(user, { message: 'Welcome!' });
     };
-    
+
     var passport = new Passport();
     passport.use('success', new Strategy());
-    
+
     var request, response;
 
     before(function(done) {
@@ -26,7 +26,7 @@ describe('middleware/authenticate', function() {
         .req(function(req) {
           request = req;
           req.session = {};
-          
+
           req.logIn = function(user, options, done) {
             this.user = user;
             done();
@@ -38,24 +38,19 @@ describe('middleware/authenticate', function() {
         })
         .dispatch();
     });
-    
+
     it('should set user', function() {
       expect(request.user).to.be.an('object');
       expect(request.user.id).to.equal('1');
       expect(request.user.username).to.equal('jaredhanson');
     });
-    
+
     it('should add message to session', function() {
       expect(request.session.messages).to.have.length(1);
       expect(request.session.messages[0]).to.equal('Login complete');
     });
-    
-    it('should redirect', function() {
-      expect(response.statusCode).to.equal(302);
-      expect(response.getHeader('Location')).to.equal('http://www.example.com/account');
-    });
   });
-  
+
   describe('success with message set by route that is added to messages', function() {
     function Strategy() {
     }
@@ -63,10 +58,10 @@ describe('middleware/authenticate', function() {
       var user = { id: '1', username: 'jaredhanson' };
       this.success(user, { message: 'Welcome!' });
     };
-    
+
     var passport = new Passport();
     passport.use('success', new Strategy());
-    
+
     var request, response;
 
     before(function(done) {
@@ -76,7 +71,7 @@ describe('middleware/authenticate', function() {
           request = req;
           req.session = {};
           req.session.messages = [ 'I exist!' ];
-          
+
           req.logIn = function(user, options, done) {
             this.user = user;
             done();
@@ -88,25 +83,20 @@ describe('middleware/authenticate', function() {
         })
         .dispatch();
     });
-    
+
     it('should set user', function() {
       expect(request.user).to.be.an('object');
       expect(request.user.id).to.equal('1');
       expect(request.user.username).to.equal('jaredhanson');
     });
-    
+
     it('should add message to session', function() {
       expect(request.session.messages).to.have.length(2);
       expect(request.session.messages[0]).to.equal('I exist!');
       expect(request.session.messages[1]).to.equal('Login complete');
     });
-    
-    it('should redirect', function() {
-      expect(response.statusCode).to.equal(302);
-      expect(response.getHeader('Location')).to.equal('http://www.example.com/account');
-    });
   });
-  
+
   describe('success with message set by strategy', function() {
     function Strategy() {
     }
@@ -114,10 +104,10 @@ describe('middleware/authenticate', function() {
       var user = { id: '1', username: 'jaredhanson' };
       this.success(user, { message: 'Welcome!' });
     };
-    
+
     var passport = new Passport();
     passport.use('success', new Strategy());
-    
+
     var request, response;
 
     before(function(done) {
@@ -126,7 +116,7 @@ describe('middleware/authenticate', function() {
         .req(function(req) {
           request = req;
           req.session = {};
-          
+
           req.logIn = function(user, options, done) {
             this.user = user;
             done();
@@ -138,24 +128,19 @@ describe('middleware/authenticate', function() {
         })
         .dispatch();
     });
-    
+
     it('should set user', function() {
       expect(request.user).to.be.an('object');
       expect(request.user.id).to.equal('1');
       expect(request.user.username).to.equal('jaredhanson');
     });
-    
+
     it('should add message to session', function() {
       expect(request.session.messages).to.have.length(1);
       expect(request.session.messages[0]).to.equal('Welcome!');
     });
-    
-    it('should redirect', function() {
-      expect(response.statusCode).to.equal(302);
-      expect(response.getHeader('Location')).to.equal('http://www.example.com/account');
-    });
   });
-  
+
   describe('success with message set by strategy with extra info', function() {
     function Strategy() {
     }
@@ -163,10 +148,10 @@ describe('middleware/authenticate', function() {
       var user = { id: '1', username: 'jaredhanson' };
       this.success(user, { message: 'Welcome!', scope: 'read' });
     };
-    
+
     var passport = new Passport();
     passport.use('success', new Strategy());
-    
+
     var request, response;
 
     before(function(done) {
@@ -175,7 +160,7 @@ describe('middleware/authenticate', function() {
         .req(function(req) {
           request = req;
           req.session = {};
-          
+
           req.logIn = function(user, options, done) {
             this.user = user;
             done();
@@ -187,22 +172,17 @@ describe('middleware/authenticate', function() {
         })
         .dispatch();
     });
-    
+
     it('should set user', function() {
       expect(request.user).to.be.an('object');
       expect(request.user.id).to.equal('1');
       expect(request.user.username).to.equal('jaredhanson');
     });
-    
+
     it('should add message to session', function() {
       expect(request.session.messages).to.have.length(1);
       expect(request.session.messages[0]).to.equal('Welcome!');
     });
-    
-    it('should redirect', function() {
-      expect(response.statusCode).to.equal(302);
-      expect(response.getHeader('Location')).to.equal('http://www.example.com/account');
-    });
   });
-  
+
 });

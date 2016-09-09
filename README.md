@@ -1,6 +1,6 @@
 [![passport banner](http://cdn.auth0.com/img/passport-banner-github.png)](http://passportjs.org)
 
-# Passport
+# Passport Restify
 
 [![Build](https://travis-ci.org/jameswomack/passport-restify.svg?branch=master)](https://travis-ci.org/jameswomack/passport-restify)
 [![Coverage](https://coveralls.io/repos/jameswomack/passport-restify/badge.svg?branch=master)](https://coveralls.io/r/jameswomack/passport-restify)
@@ -21,7 +21,9 @@ hooks for controlling what occurs when authentication succeeds or fails.
 
 ## Install
 
-    $ npm install passport-restify
+```
+$ npm install passport-restify
+```
 
 ## Usage
 
@@ -35,16 +37,18 @@ or [Twitter](http://twitter.com/)), or federated authentication using [OpenID](h
 Before authenticating requests, the strategy (or strategies) used by an
 application must be configured.
 
-    passport.use(new LocalStrategy(
-      function(username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
-          if (err) { return done(err); }
-          if (!user) { return done(null, false); }
-          if (!user.verifyPassword(password)) { return done(null, false); }
-          return done(null, user);
-        });
-      }
-    ));
+```javascript
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
+```
 
 There are 300+ strategies. Find the ones you want at: [passportjs.org](http://passportjs.org)
 
@@ -60,27 +64,57 @@ serialization and deserialization logic.  In a typical application, this will be
 as simple as serializing the user ID, and finding the user by ID when
 deserializing.
 
-    passport.serializeUser(function(user, done) {
-      done(null, user.id);
-    });
+```javascript
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
-    passport.deserializeUser(function(id, done) {
-      User.findById(id, function (err, user) {
-        done(err, user);
-      });
-    });
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+```
 
+
+#### Middleware
+
+To use Passport in a [Restify](http://restify.com/) or
+[Connect](http://senchalabs.github.com/connect/)-based application, configure it
+with the required `passport.initialize()` middleware.  If your application uses
+persistent login sessions (recommended, but not required), `passport.session()`
+middleware must also be used.
+
+```javascript
+var CookieParser = require('restify-cookies');
+var session = require('cookie-session');
+var app = restify.createServer();
+server.use(restify.queryParser());
+server.use(restify.bodyParser());
+server.use(restify.gzipResponse());
+server.use(restify.requestLogger());
+server.use(CookieParser.parse);
+server.use(session({
+	keys: ['key1', 'key2'],
+	maxage: 48 * 3600 /*hours*/ * 1000,  /*in milliseconds*/
+	secureProxy: false // if you do SSL outside of node
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+```
 
 #### Authenticate Requests
 
 Passport provides an `authenticate()` function, which is used as route
 middleware to authenticate requests.
 
-    app.post('/login', 
-      passport.authenticate('local', { failureRedirect: '/login' }),
-      function(req, res) {
-        res.redirect('/');
-      });
+```javascript
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+```
 
 ## Strategies
 
@@ -110,7 +144,9 @@ included in [passport-local](https://github.com/jameswomack/passport-restify-loc
 - **Local Strategy**: Refer to the following tutorials for setting up user authentication via LocalStrategy (`passport-local`)
     - Express v3x - [Tutorial](http://mherman.org/blog/2013/11/11/user-authentication-with-passport-dot-js/) / [working example](https://github.com/mjhea0/passport-local)
     - Express v4x - [Tutorial](http://mherman.org/blog/2015/01/31/local-authentication-with-passport-and-express-4/) / [working example](https://github.com/mjhea0/passport-local-express4)
-- **Social Authentication**: Refer to this [tutorial](http://mherman.org/blog/2013/11/10/social-authentication-with-passport-dot-js/) for setting up various social authentication strategies, including a working example found on this [repo](https://github.com/mjhea0/passport-examples).
+- **Social Authentication**: Refer to the following tutorials for setting up various social authentication strategies:
+    - Express v3x - [Tutorial](http://mherman.org/blog/2013/11/10/social-authentication-with-passport-dot-js/) / [working example](https://github.com/mjhea0/passport-examples)
+    - Express v4x - [Tutorial](http://mherman.org/blog/2015/09/26/social-authentication-in-node-dot-js-with-passport) / [working example](https://github.com/mjhea0/passport-social-auth)
 
 ## Related Modules
 
@@ -125,8 +161,10 @@ that build upon or integrate with Passport.
 
 ## Tests
 
-    $ npm install
-    $ make test
+```
+$ npm install
+$ make test
+```
 
 ## Credits
 

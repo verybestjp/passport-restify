@@ -1,6 +1,6 @@
 {
   "name": "passport-restify",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Simple, unobtrusive authentication for Restify.",
   "keywords": [
     "restify",
